@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ModFlow: Minecraft</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-900 text-gray-100 font-sans flex flex-col min-h-screen">
+
+    <!-- Шапка с переключателем языков -->
+    <header class="w-full max-w-6xl mx-auto px-6 py-4 flex justify-end">
+        <div class="relative inline-block text-left">
+            <select id="lang-select" class="bg-gray-800 border border-gray-700 text-gray-200 text-sm rounded-lg focus:ring-emerald-500 focus:border-emerald-500 block p-2.5 cursor-pointer">
+                <option value="en">English</option>
+                <option value="ru">Русский</option>
+                <option value="fr">Français</option>
+                <option value="es">Español</option>
+                <option value="de">Deutsch</option>
+            </select>
+        </div>
+    </header>
+
+    <!-- Основной блок -->
+    <main class="flex-grow flex flex-col items-center justify-center text-center px-4 py-6">
+        <!-- Красивый буквенный логотип (Minecraft Style) -->
+        <div class="w-24 h-24 bg-gradient-to-br from-emerald-600 to-green-800 rounded-2xl flex items-center justify-center shadow-lg shadow-emerald-500/30 border-2 border-emerald-500/40 mb-6">
+            <span class="text-white text-3xl font-black tracking-wider drop-shadow-[0_2px_4px_rgba(0,0,0,0.6)]">MF</span>
+        </div>
+
+        <!-- Заголовок и Описание (будут меняться через JS) -->
+        <h1 id="app-title" class="text-4xl md:text-5xl font-extrabold tracking-tight mb-4 text-emerald-400">
+            ModFlow: Minecraft
+        </h1>
+        <p id="app-desc" class="text-gray-300 text-lg md:text-xl max-w-md mb-8">
+            <!-- Текст подставится из JS -->
+        </p>
+
+        <!-- Кнопка скачивания -->
+        <a id="download-btn" href="https://play.google.com/store/apps/details?id=com.modflow.minecraft" 
+           target="_blank" 
+           class="inline-flex items-center px-8 py-4 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-semibold shadow-lg shadow-emerald-600/20 transition duration-200">
+            <svg class="w-6 h-6 mr-3" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M3,5.277L13.162,12L3,18.723V5.277 M15.719,10.312l-1.442-0.949L3.48,3.15C3.328,3.05,3.16,3,3,3C2.817,3,2.635,3.059,2.48,3.175C2.18,3.4,2,3.75,2,4.125v15.75c0,0.375,0.18,0.725,0.48,0.95c0.155,0.116,0.337,0.175,0.52,0.175c0.16,0,0.328-0.05,0.48-0.15l10.797-6.213l1.442-0.949c0.375-0.247,0.375-0.781,0-1.028"/>
+            </svg>
+            <span id="btn-text"><!-- Текст подставится из JS --></span>
+        </a>
+    </main>
+
+    <!-- Подвал (Footer) -->
+    <footer class="border-t border-gray-800 py-6 text-center text-xs text-gray-500">
+        <p class="mb-2">&copy; 2026 ModFlow. <span id="footer-rights"><!-- Текст подставится из JS --></span></p>
+        <div class="space-x-4">
+            <a href="privacy.html" id="link-privacy" class="hover:text-emerald-400 transition"><!-- Текст подставится из JS --></a>
+            <a href="app-ads.txt" class="hover:text-emerald-400 transition">app-ads.txt</a>
+        </div>
+    </footer>
+
+    <!-- Скрипт локализации -->
+    <script>
+        const translations = {
+            en: {
+                title: "ModFlow: Minecraft",
+                desc: "Mods, addons, maps and skins for Minecraft PE. Easy automatic import.",
+                btn: "Download on Google Play",
+                rights: "All rights reserved.",
+                privacy: "Privacy Policy"
+            },
+            ru: {
+                title: "ModFlow: Minecraft",
+                desc: "Моды, аддоны, карты и скины для Minecraft PE. Быстрый автоматический импорт.",
+                btn: "Скачать в Google Play",
+                rights: "Все права защищены.",
+                privacy: "Политика конфиденциальности"
+            },
+            fr: {
+                title: "ModFlow: Minecraft",
+                desc: "Mods, addons, cartes et skins pour Minecraft PE. Importation automatique rapide.",
+                btn: "Télécharger sur Google Play",
+                rights: "Tous droits réservés.",
+                privacy: "Politique de confidentialité"
+            },
+            es: {
+                title: "ModFlow: Minecraft",
+                desc: "Mods, addons, mapas y skins para Minecraft PE. Importación automática sencilla.",
+                btn: "Descargar en Google Play",
+                rights: "Todos los derechos reservados.",
+                privacy: "Política de privacidad"
+            },
+            de: {
+                title: "ModFlow: Minecraft",
+                desc: "Mods, Add-ons, Karten und Skins für Minecraft PE. Einfacher automatischer Import.",
+                btn: "Auf Google Play herunterladen",
+                rights: "Alle Rechte vorbehalten.",
+                privacy: "Datenschutzerklärung"
+            }
+        };
+
+        const langSelect = document.getElementById('lang-select');
+        const appDesc = document.getElementById('app-desc');
+        const btnText = document.getElementById('btn-text');
+        const footerRights = document.getElementById('footer-rights');
+        const linkPrivacy = document.getElementById('link-privacy');
+
+        function applyLanguage(lang) {
+            if (!translations[lang]) lang = 'en';
+            
+            document.title = `${translations[lang].title} — ${translations[lang].desc.slice(0, 50)}...`;
+            appDesc.textContent = translations[lang].desc;
+            btnText.textContent = translations[lang].btn;
+            footerRights.textContent = translations[lang].rights;
+            linkPrivacy.textContent = translations[lang].privacy;
+            langSelect.value = lang;
+        }
+
+        function detectLanguage() {
+            const userLang = navigator.language || navigator.userLanguage;
+            const shortLang = userLang.toLowerCase().split('-')[0];
+            return translations[shortLang] ? shortLang : 'en';
+        }
+
+        const initialLang = detectLanguage();
+        applyLanguage(initialLang);
+
+        langSelect.addEventListener('change', (event) => {
+            applyLanguage(event.target.value);
+        });
+    </script>
+</body>
+</html>
